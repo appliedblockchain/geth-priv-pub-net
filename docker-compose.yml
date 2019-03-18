@@ -47,6 +47,8 @@ services:
         --syncmode "full" \
         --ethstats "validator-0:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
         --gasprice 0 \
+        --istanbul.blockperiod 0 \
+        --istanbul.blockpausetime 1  \
         --unlock '0' --password '/eth/password.txt'
     networks:
       app_net:
@@ -85,7 +87,9 @@ services:
         --metrics \
         --syncmode "full" \
         --ethstats "validator-1:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
-        --gasprice 0
+        --gasprice 0 \
+        --istanbul.blockperiod 0 \
+        --istanbul.blockpausetime 1 
     networks:
       app_net:
         ipv4_address: 172.16.239.11
@@ -123,7 +127,9 @@ services:
         --metrics \
         --syncmode "full" \
         --ethstats "validator-2:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
-        --gasprice 0
+        --gasprice 0 \
+        --istanbul.blockperiod 0 \
+        --istanbul.blockpausetime 1 
     networks:
       app_net:
         ipv4_address: 172.16.239.12
@@ -161,7 +167,9 @@ services:
         --metrics \
         --syncmode "full" \
         --ethstats "validator-3:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
-        --gasprice 0
+        --gasprice 0 \
+        --istanbul.blockperiod 0 \
+        --istanbul.blockpausetime 1 
     networks:
       app_net:
         ipv4_address: 172.16.239.13
