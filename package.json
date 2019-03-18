@@ -1,0 +1,11 @@
+{
+  "name": "get-istanbul-tests",
+  "version": "1.0.0",
+  "author": "seektheerror@gmail.com",
+  "scripts": {
+    "compile": "solc --combined-json abi,bin SimpleStorage.sol > SimpleStorage.json"
+  },
+  "dependencies": {
+    "web3": "1.0.0-beta.33"
+  }
+}
