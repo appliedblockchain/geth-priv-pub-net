@@ -1,5 +1,16 @@
-# Creatign a docker-compose.yml with istanbul-tools
-## Installing istanbul-tools
+# Geth Istambul Demo
+
+## Running the demo
+
+1. Start the network with `docker-compose up` in one terminal
+2. `npm install`
+3. `npm run compile` (Optional, the compiled contract is committed)
+4. `node deploy.js`
+5. `node index.js`
+
+
+## Creatign a docker-compose.yml with istanbul-tools
+### Installing istanbul-tools
 
 Install go: https://golang.org/dl/
 
@@ -33,14 +44,15 @@ COPYRIGHT:
 ```
 
 
-## Generating a config:
+### Generating a config:
 
 ``` sh
 istanbul setup --num 4 --docker-compose --save
 docker-compose up
 ```
 
-## Creating an account
+### Creating an account with ether
+
 1. Install geth
 2. `geth attach http://localhost:8545`
 3. Run `personnal.newAccount`, enter a password
@@ -51,10 +63,3 @@ docker-compose up
 8. if you want the chain data to persist, add a volume for each validator and map it to `/eth` in each validator(or node)
 
 You can look at docker-compose.yml for the end result.
-
-# Running the demo
-
-1. npm install
-2. npm run compile
-3. node deploy.js
-4. node index.js
