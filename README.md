@@ -1,4 +1,7 @@
-# Geth Istambul Demo
+# Geth Private-Public Network
+
+Docker-compose based Ethereum Network Validator Nodes set up as a private network (example uses IBFT consensus) with nodes connecting to each other via the public internet.
+
 
 ## Running the demo
 
