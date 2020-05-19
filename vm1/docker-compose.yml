@@ -24,30 +24,6 @@ services:
         ipv4_address: 172.16.239.21
 
 
-  nginx-2:
-    build:
-      context: ./auth3
-    depends_on:
-      - validator-2
-    ports:
-      - 82:82
-    networks:
-      app_net:
-        ipv4_address: 172.16.239.22
-
-
-  nginx-3:
-    build:
-      context: ./auth4
-    depends_on:
-      - validator-3
-    ports:
-      - 83:83
-    networks:
-      app_net:
-        ipv4_address: 172.16.239.23
-
-
   eth-stats:
     image: quay.io/amis/ethstats:latest
     ports:
@@ -145,88 +121,6 @@ services:
         ipv4_address: 172.16.239.11
     restart: always
 
-  validator-2:
-    hostname: validator-2
-    image: quay.io/amis/geth:latest
-    ports:
-      - '30305:30303'
-      - '8547:8545'
-    volumes:
-      - validator-2:/eth
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        mkdir -p /eth/geth
-        echo '{"config":{"chainId":2017,"homesteadBlock":1,"eip150Block":2,"eip150Hash":"0x0000000000000000000000000000000000000000000000000000000000000000","eip155Block":3,"eip158Block":3,"istanbul":{"epoch":30000,"policy":0}},"nonce":"0x0","timestamp":"0x5c8fb4e6","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000f89af85494b161d3fd505bce24f0bed67b371bdcd076c48917941767010310a13762e0072b50446e0ae4b75f001f94e499498492c7d40109944fefa5f46aff492c2530943a7d64afc7adb752c4fb8be46bd891db82ee81e8b8410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0","gasLimit":"0x47b760","difficulty":"0x1","mixHash":"0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365","coinbase":"0x0000000000000000000000000000000000000000","alloc":{"1767010310a13762e0072b50446e0ae4b75f001f":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"3a7d64afc7adb752c4fb8be46bd891db82ee81e8":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"b161d3fd505bce24f0bed67b371bdcd076c48917":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"e499498492c7d40109944fefa5f46aff492c2530":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"}, "04b7aab326aedb6e44c02f34e7ce9e325bfc11be":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"}},"number":"0x0","gasUsed":"0x0","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000"}' > /eth/genesis.json
-        echo '["enode://f0ea82dbc3ec4b1f25721a2744fab8c097c4515b9b61fd0798d57c5ebe34b0c1cf9fb6c1010b2e1fa753e3bab813bfa23eeef8ced39ee1c0d61fae7522a98e8d@172.16.239.20:80?discport=0","enode://64241d64e510164eb4307ddbd9040b11c20fac23668e5170e8f2f9c0e49012b9c5aa8500fd18bf48f7c99dc0aad8ce33f351a2a26b252759e58c2e0c5d7918f4@172.16.239.21:81?discport=0","enode://4125cde85d9ba29f6e042547d110413fca3be3e9fee6e916bf9a51a61c10b3326ff9767e9379fef4b67fd3b010585d1a0eb3e1a3bb6e4bf65d102dee47b5f722@172.16.239.22:82?discport=0","enode://e1ef505bceeaad8e4091e3559d61e0691fb34b01e397b059799f176e7050160989dcf63d3a4682fe81ef4fc3f909135d8db69e9d377ddf64b41cc16f33434ba2@172.16.239.23:83?discport=0"]' > /eth/geth/static-nodes.json
-        geth --datadir "/eth" init "/eth/genesis.json"
-        geth \
-        --identity "validator-2" \
-        --rpc \
-        --rpcaddr "0.0.0.0" \
-        --rpcport "8545" \
-        --rpccorsdomain "*" \
-        --datadir "/eth" \
-        --port "30303" \
-        --rpcapi "db,eth,net,web3,istanbul,personal" \
-        --networkid "2017" \
-        --nat "any" \
-        --nodekeyhex "63c10324f35ad5aad1c525bfed73959f9240d52572218f64d51498a69c5a7ccc" \
-        --mine \
-        --debug \
-        --metrics \
-        --syncmode "full" \
-        --ethstats "validator-2:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
-        --gasprice 0 \
-        --istanbul.blockperiod 0 \
-        --istanbul.blockpausetime 1
-    networks:
-      app_net:
-        ipv4_address: 172.16.239.12
-    restart: always
-
-  validator-3:
-    hostname: validator-3
-    image: quay.io/amis/geth:latest
-    ports:
-      - '30306:30303'
-      - '8548:8545'
-    volumes:
-      - validator-3:/eth
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        mkdir -p /eth/geth
-        echo '{"config":{"chainId":2017,"homesteadBlock":1,"eip150Block":2,"eip150Hash":"0x0000000000000000000000000000000000000000000000000000000000000000","eip155Block":3,"eip158Block":3,"istanbul":{"epoch":30000,"policy":0}},"nonce":"0x0","timestamp":"0x5c8fb4e6","extraData":"0x0000000000000000000000000000000000000000000000000000000000000000f89af85494b161d3fd505bce24f0bed67b371bdcd076c48917941767010310a13762e0072b50446e0ae4b75f001f94e499498492c7d40109944fefa5f46aff492c2530943a7d64afc7adb752c4fb8be46bd891db82ee81e8b8410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c0","gasLimit":"0x47b760","difficulty":"0x1","mixHash":"0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365","coinbase":"0x0000000000000000000000000000000000000000","alloc":{"1767010310a13762e0072b50446e0ae4b75f001f":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"3a7d64afc7adb752c4fb8be46bd891db82ee81e8":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"b161d3fd505bce24f0bed67b371bdcd076c48917":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"},"e499498492c7d40109944fefa5f46aff492c2530":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"}, "04b7aab326aedb6e44c02f34e7ce9e325bfc11be":{"balance":"0x446c3b15f9926687d2c40534fdb564000000000000"}},"number":"0x0","gasUsed":"0x0","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000"}' > /eth/genesis.json
-        echo '["enode://f0ea82dbc3ec4b1f25721a2744fab8c097c4515b9b61fd0798d57c5ebe34b0c1cf9fb6c1010b2e1fa753e3bab813bfa23eeef8ced39ee1c0d61fae7522a98e8d@172.16.239.20:80?discport=0","enode://64241d64e510164eb4307ddbd9040b11c20fac23668e5170e8f2f9c0e49012b9c5aa8500fd18bf48f7c99dc0aad8ce33f351a2a26b252759e58c2e0c5d7918f4@172.16.239.21:81?discport=0","enode://4125cde85d9ba29f6e042547d110413fca3be3e9fee6e916bf9a51a61c10b3326ff9767e9379fef4b67fd3b010585d1a0eb3e1a3bb6e4bf65d102dee47b5f722@172.16.239.22:82?discport=0","enode://e1ef505bceeaad8e4091e3559d61e0691fb34b01e397b059799f176e7050160989dcf63d3a4682fe81ef4fc3f909135d8db69e9d377ddf64b41cc16f33434ba2@172.16.239.23:83?discport=0"]' > /eth/geth/static-nodes.json
-        geth --datadir "/eth" init "/eth/genesis.json"
-        geth \
-        --identity "validator-3" \
-        --rpc \
-        --rpcaddr "0.0.0.0" \
-        --rpcport "8545" \
-        --rpccorsdomain "*" \
-        --datadir "/eth" \
-        --port "30303" \
-        --rpcapi "db,eth,net,web3,istanbul,personal" \
-        --networkid "2017" \
-        --nat "any" \
-        --nodekeyhex "6358db6d1269c68edb6420a51b6d0ed1facfb6d281badf484ba36747461096f3" \
-        --mine \
-        --debug \
-        --metrics \
-        --syncmode "full" \
-        --ethstats "validator-3:bb98a0b6442386d0cdf8a31b267892c1@172.16.239.9:3000" \
-        --gasprice 0 \
-        --istanbul.blockperiod 0 \
-        --istanbul.blockpausetime 1
-    networks:
-      app_net:
-        ipv4_address: 172.16.239.13
-    restart: always
-
 networks:
   app_net:
     driver: bridge
@@ -238,5 +132,3 @@ networks:
 volumes:
   validator-0:
   validator-1:
-  validator-2:
-  validator-3:
