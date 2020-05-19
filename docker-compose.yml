@@ -38,7 +38,7 @@ services:
 
   nginx-3:
     build:
-      context: ./auth3
+      context: ./auth4
     depends_on:
       - validator-3
     ports:
